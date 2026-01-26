@@ -4,6 +4,7 @@ import ContactForm from './components/ContactForm'
 
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +45,7 @@ function App() {
           <button className="hero-btn" onClick={scrollToContact}>BOOK MY SWEETBOOTH</button>
         </div>
         <div className="hero-image">
-          <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sweet treats" />
+          <img src="images/booth.jpg" alt="Sweet treats" />
         </div>
       </section>
 
@@ -53,15 +54,15 @@ function App() {
         <h2 className="section-title">Our Samples</h2>
         <div className="marquee">
           <div className="marquee-content">
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cupcakes" />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Macarons" />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Donuts" />
-            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cake" />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cookies" />
-            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ice cream" />
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cupcakes" />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Macarons" />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Donuts" />
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cupcakes" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Macarons" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Donuts" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cake" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cookies" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ice cream" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cupcakes" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Macarons" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Donuts" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
           </div>
         </div>
       </section>
@@ -79,6 +80,16 @@ function App() {
         <button className="back-to-top" onClick={scrollToTop} aria-label="Back to top">
           ↑
         </button>
+      )}
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div className="lightbox" onClick={() => setLightboxImage(null)}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={lightboxImage} alt="Enlarged view" />
+            <button className="lightbox-close" onClick={() => setLightboxImage(null)}>×</button>
+          </div>
+        </div>
       )}
     </>
   )
