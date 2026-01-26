@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import emailjs from '@emailjs/browser'
 
 function ContactForm() {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    hearAboutUs: '',
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -14,24 +15,28 @@ function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      // Replace these with your EmailJS credentials
-      const result = await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          to_email: 'hello@sweetboothyvr.com',
+      const response = await fetch('https://formspree.io/f/xpqdlkkv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
-      )
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          hearAboutUs: formData.hearAboutUs,
+          message: formData.message,
+        }),
+      })
 
-      console.log('Email sent successfully:', result.text)
-      alert('Thank you for your message! We\'ll get back to you soon.')
-      setFormData({ name: '', email: '', message: '' })
+      if (response.ok) {
+        alert('Thank you for your message! We\'ll get back to you soon.')
+        setFormData({ firstName: '', lastName: '', email: '', hearAboutUs: '', message: '' })
+      } else {
+        throw new Error('Failed to send message')
+      }
     } catch (error) {
-      console.error('Error sending email:', error)
+      console.error('Error sending message:', error)
       alert('Sorry, there was an error sending your message. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -48,15 +53,25 @@ function ContactForm() {
   return (
     <section className="contact" id="contact">
       <div className="contact-container">
-        <h2 className="section-title">Get In Touch</h2>
-        <p className="contact-subtitle">We'd love to hear from you! Send us a message.</p>
+        <h2 className="section-title">Get the scoop.</h2>
+        <p className="contact-subtitle">Get started on booking your SweetBooth by sending us some details about your event. We’ll let you know if we’re available and also send you some pricing details.</p>
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <input
               type="text"
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
               onChange={handleInputChange}
               required
             />
@@ -65,20 +80,28 @@ function ContactForm() {
             <input
               type="email"
               name="email"
-              placeholder="Your Email"
+              placeholder="Email"
               value={formData.email}
               onChange={handleInputChange}
               required
             />
           </div>
           <div className="form-group">
+            <input
+              type="text"
+              name="hearAboutUs"
+              placeholder="How did you hear about us?"
+              value={formData.hearAboutUs}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
             <textarea
               name="message"
-              placeholder="Your Message"
+              placeholder="Tell us about your event or request. Some details that would be helpful are date, time, type of event, and location"
               rows={6}
               value={formData.message}
               onChange={handleInputChange}
-              required
             ></textarea>
           </div>
           <button type="submit" className="submit-btn" disabled={isSubmitting}>
