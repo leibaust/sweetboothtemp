@@ -54,15 +54,35 @@ function App() {
         <h2 className="section-title">Our Samples</h2>
         <div className="marquee">
           <div className="marquee-content">
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cupcakes" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Macarons" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Donuts" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cake" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cookies" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ice cream" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cupcakes" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Macarons" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
-            <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Donuts" onClick={() => setLightboxImage('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')} style={{ cursor: 'pointer' }} />
+            <img src="images/01.jpg" alt="Gallery 1" onClick={() => setLightboxImage('images/01.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/02.jpg" alt="Gallery 2" onClick={() => setLightboxImage('images/02.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/03.jpg" alt="Gallery 3" onClick={() => setLightboxImage('images/03.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/04.jpg" alt="Gallery 4" onClick={() => setLightboxImage('images/04.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/05.jpg" alt="Gallery 5" onClick={() => setLightboxImage('images/05.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/06.jpg" alt="Gallery 6" onClick={() => setLightboxImage('images/06.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/07.jpg" alt="Gallery 7" onClick={() => setLightboxImage('images/07.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/08.jpg" alt="Gallery 8" onClick={() => setLightboxImage('images/08.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/09.jpg" alt="Gallery 9" onClick={() => setLightboxImage('images/09.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/10.jpg" alt="Gallery 10" onClick={() => setLightboxImage('images/10.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/11.jpg" alt="Gallery 11" onClick={() => setLightboxImage('images/11.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/12.jpg" alt="Gallery 12" onClick={() => setLightboxImage('images/12.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/13.jpg" alt="Gallery 13" onClick={() => setLightboxImage('images/13.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/14.jpg" alt="Gallery 14" onClick={() => setLightboxImage('images/14.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/15.jpg" alt="Gallery 15" onClick={() => setLightboxImage('images/15.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/16.jpg" alt="Gallery 16" onClick={() => setLightboxImage('images/16.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/17.jpg" alt="Gallery 17" onClick={() => setLightboxImage('images/17.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/18.jpg" alt="Gallery 18" onClick={() => setLightboxImage('images/18.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/19.jpg" alt="Gallery 19" onClick={() => setLightboxImage('images/19.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/20.jpg" alt="Gallery 20" onClick={() => setLightboxImage('images/20.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/21.jpg" alt="Gallery 21" onClick={() => setLightboxImage('images/21.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/22.jpg" alt="Gallery 22" onClick={() => setLightboxImage('images/22.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/23.jpg" alt="Gallery 23" onClick={() => setLightboxImage('images/23.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/24.jpg" alt="Gallery 24" onClick={() => setLightboxImage('images/24.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/25.jpg" alt="Gallery 25" onClick={() => setLightboxImage('images/25.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/26.jpg" alt="Gallery 26" onClick={() => setLightboxImage('images/26.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/27.jpg" alt="Gallery 27" onClick={() => setLightboxImage('images/27.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/28.jpg" alt="Gallery 28" onClick={() => setLightboxImage('images/28.jpg')} style={{ cursor: 'pointer' }} />
+            <img src="images/29.jpg" alt="Gallery 29" onClick={() => setLightboxImage('images/29.jpg')} style={{ cursor: 'pointer' }} />
           </div>
         </div>
       </section>
