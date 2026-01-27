@@ -226,28 +226,72 @@ body {
   color: #333;
 }
 
+.marquee-container {
+  position: relative;
+  max-width: 100%;
+}
+
 .marquee {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   padding: 2rem 0;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.marquee::-webkit-scrollbar {
+  display: none;
 }
 
 .marquee-content {
   display: flex;
   gap: 2rem;
-  animation: marquee 30s linear infinite;
+  animation: marquee 60s linear infinite;
+  padding: 0 2rem;
 }
 
 .marquee-content img {
-  width: 300px;
+  width: auto;
   height: 200px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .marquee-content img:hover {
   transform: scale(1.05);
+}
+
+.marquee-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-main);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marquee-nav:hover {
+  background: var(--color-secondary);
+}
+
+.marquee-nav-left {
+  left: 1rem;
+}
+
+.marquee-nav-right {
+  right: 1rem;
 }
 
 @keyframes marquee {
@@ -255,7 +299,7 @@ body {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
@@ -403,6 +447,37 @@ body {
 
 .lightbox-close:hover {
   color: var(--color-main);
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-main);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: var(--color-secondary);
+}
+
+.lightbox-prev {
+  left: -60px;
+}
+
+.lightbox-next {
+  right: -60px;
 }
 
 /* Responsive Design */
