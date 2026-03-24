@@ -214,7 +214,7 @@ body {
 /* Gallery Section */
 .gallery {
   padding: 5rem 0;
-  background: linear-gradient(135deg, var(--color-background), var(--color-tertiary));
+  background: linear-gradient(to bottom, var(--color-background), var(--color-tertiary));
 }
 
 .section-title {
@@ -303,6 +303,253 @@ body {
   }
 }
 
+/* Pricing Section */
+.pricing {
+  padding: 5rem 2rem;
+  background: linear-gradient(to bottom, var(--color-tertiary), var(--color-background));
+}
+
+.pricing-subtitle {
+  text-align: center;
+  font-size: 1rem;
+  font-family: 'subtitle', sans-serif;
+  color: #666;
+  margin-top: -2rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.pricing-cards {
+  display: flex;
+  gap: 2rem;
+  max-width: 960px;
+  margin: 0 auto 2rem;
+  align-items: stretch;
+}
+
+.pricing-card {
+  flex: 1;
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.pricing-card-featured {
+  background: var(--color-main);
+  color: white;
+  box-shadow: 0 20px 50px rgba(23, 98, 70, 0.35);
+}
+
+.pricing-card-badge {
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-tertiary);
+  color: var(--color-main);
+  font-family: 'subtitle', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 1rem;
+  white-space: nowrap;
+}
+
+.pricing-card-header {
+  padding: 2.5rem 2rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.pricing-card-featured .pricing-card-header {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.pricing-card-name {
+  font-family: 'accent', cursive;
+  font-weight: 400;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--color-main);
+}
+
+.pricing-card-featured .pricing-card-name {
+  color: var(--color-tertiary);
+}
+
+.pricing-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-amount {
+  font-family: 'title', sans-serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #333;
+  line-height: 1;
+}
+
+.pricing-card-featured .pricing-amount {
+  color: white;
+}
+
+.pricing-duration {
+  font-family: 'subtitle', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  letter-spacing: 0.05em;
+}
+
+.pricing-card-featured .pricing-duration {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.pricing-card-note {
+  font-family: 'body', serif;
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
+}
+
+.pricing-card-featured .pricing-card-note {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.pricing-card-body {
+  padding: 1.5rem 2rem;
+  flex: 1;
+}
+
+.pricing-section-label {
+  font-family: 'subtitle', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.pricing-card-featured .pricing-section-label {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.pricing-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.pricing-list li {
+  font-family: 'body', serif;
+  font-size: 0.9rem;
+  color: #444;
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.4;
+}
+
+.pricing-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--color-secondary);
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.pricing-card-featured .pricing-list li {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pricing-card-featured .pricing-list li::before {
+  color: var(--color-tertiary);
+}
+
+.pricing-addons {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pricing-addons li {
+  font-family: 'body', serif;
+  font-size: 0.85rem;
+  color: #555;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.pricing-card-featured .pricing-addons li {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.addon-price {
+  font-weight: 600;
+  color: var(--color-main);
+  white-space: nowrap;
+  font-size: 0.8rem;
+  font-family: 'subtitle', sans-serif;
+}
+
+.pricing-card-featured .addon-price {
+  color: var(--color-tertiary);
+}
+
+.pricing-btn {
+  margin: 0 2rem 2rem;
+  background: linear-gradient(135deg, var(--color-main), var(--color-secondary));
+  color: white;
+  padding: 1.25rem 2rem;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'subtitle', sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(23, 98, 70, 0.3);
+  letter-spacing: 0.05em;
+}
+
+.pricing-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(23, 98, 70, 0.4);
+}
+
+.pricing-btn-featured {
+  background: var(--color-tertiary);
+  color: var(--color-main);
+  box-shadow: 0 4px 15px rgba(252, 223, 214, 0.4);
+}
+
+.pricing-btn-featured:hover {
+  box-shadow: 0 8px 25px rgba(252, 223, 214, 0.5);
+}
+
+.pricing-footnote {
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: 'body', serif;
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
+  line-height: 1.6;
+}
+
 /* Contact Section */
 .contact {
   padding: 5rem 0;
@@ -335,7 +582,8 @@ body {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-select {
   width: 100%;
   padding: 1rem 1.5rem;
   border: none;
@@ -345,8 +593,24 @@ body {
   font-family: inherit;
 }
 
+.form-select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.25rem center;
+  cursor: pointer;
+  color: #333;
+}
+
+.form-select option[value=""] {
+  color: #aaa;
+}
+
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-select:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(23, 98, 70, 0.1);
 }
@@ -512,5 +776,13 @@ body {
   
   .contact-form {
     padding: 2rem;
+  }
+
+  .pricing-cards {
+    flex-direction: column;
+  }
+
+  .pricing {
+    padding: 5rem 1rem;
   }
 }
