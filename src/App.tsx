@@ -1,16 +1,50 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type CSSProperties } from 'react'
 import './App.css'
 import ContactForm from './components/ContactForm'
+
+type PolaroidStyle = CSSProperties & { '--rot'?: string };
+
+const SCATTER_POSITIONS: { top: string; left: string; rot: number }[] = [
+  { top: '2%',  left: '0%',  rot: -7 },
+  { top: '6%',  left: '15%', rot: 5 },
+  { top: '0%',  left: '30%', rot: -4 },
+  { top: '7%',  left: '45%', rot: 8 },
+  { top: '3%',  left: '60%', rot: -6 },
+  { top: '5%',  left: '74%', rot: 4 },
+  { top: '50%', left: '6%',  rot: 6 },
+  { top: '46%', left: '21%', rot: -5 },
+  { top: '55%', left: '36%', rot: 8 },
+  { top: '48%', left: '51%', rot: -7 },
+  { top: '58%', left: '64%', rot: 5 },
+  { top: '51%', left: '72%', rot: -4 },
+];
 
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isMarqueeHovered, setIsMarqueeHovered] = useState(false);
+  const [isClientsMarqueeHovered, setIsClientsMarqueeHovered] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState('');
-  const marqueeRef = useRef<HTMLDivElement>(null);
+  const clientsMarqueeRef = useRef<HTMLDivElement>(null);
 
   const galleryImages = Array.from({ length: 29 }, (_, i) => `images/${String(i + 1).padStart(2, '0')}.jpg`);
+
+  const CURATED_COUNT = Math.min(12, galleryImages.length);
+  const curatedIndices = Array.from({ length: CURATED_COUNT }, (_, i) =>
+    Math.round((i * (galleryImages.length - 1)) / (CURATED_COUNT - 1))
+  );
+
+  const clients = [
+    'Air Canada',
+    'Demonware',
+    'Stikeman Elliott LLP',
+    'Opert',
+    'Providence Health Care',
+    'Ratanak International',
+    '8 West Clinic',
+    'Orijin Yoga',
+    "St. Paul's Hospital",
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,15 +99,15 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollMarqueeLeft = () => {
-    if (marqueeRef.current) {
-      marqueeRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+  const scrollClientsMarqueeLeft = () => {
+    if (clientsMarqueeRef.current) {
+      clientsMarqueeRef.current.scrollBy({ left: -400, behavior: 'smooth' });
     }
   };
 
-  const scrollMarqueeRight = () => {
-    if (marqueeRef.current) {
-      marqueeRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+  const scrollClientsMarqueeRight = () => {
+    if (clientsMarqueeRef.current) {
+      clientsMarqueeRef.current.scrollBy({ left: 400, behavior: 'smooth' });
     }
   };
 
@@ -82,12 +116,13 @@ function App() {
       {/* Header */}
       <header className="header">
         <nav className="nav">
-          <img src="/logo.svg" alt="Sweetbooth" className="logo" onClick={scrollToTop} style={{ cursor: 'pointer' }} />
           <ul className="nav-links">
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToContact(); }}>Contact</a></li>
           </ul>
+          <img src="/logo.svg" alt="Sweetbooth" className="logo" onClick={scrollToTop} style={{ cursor: 'pointer' }} />
+          <button className="nav-book-btn" onClick={() => scrollToContact()}>Book Now</button>
         </nav>
       </header>
 
@@ -103,32 +138,50 @@ function App() {
         </div>
       </section>
 
-      {/* Marquee Gallery */}
+      {/* Scattered Sample Gallery */}
       <section className="gallery" id="gallery">
         <h2 className="section-title">Our Samples</h2>
+        <div className="gallery-scatter-wrap">
+          <div className="gallery-scatter">
+            {curatedIndices.map((imgIndex, presetIndex) => {
+              const pos = SCATTER_POSITIONS[presetIndex];
+              const style: PolaroidStyle = { top: pos.top, left: pos.left, '--rot': `${pos.rot}deg` };
+              return (
+                <div key={imgIndex} className="gallery-polaroid" style={style} onClick={() => openLightbox(imgIndex)}>
+                  <img src={galleryImages[imgIndex]} alt={`Gallery ${imgIndex + 1}`} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Clients Marquee */}
+      <section className="clients" id="clients">
+        <h2 className="section-title">Our Satisfied Clients</h2>
         <div className="marquee-container">
-          <button className="marquee-nav marquee-nav-left" onClick={scrollMarqueeLeft} aria-label="Scroll left">
+          <button className="marquee-nav marquee-nav-left" onClick={scrollClientsMarqueeLeft} aria-label="Scroll left">
             ‹
           </button>
-          <div 
-            className="marquee" 
-            ref={marqueeRef}
-            onMouseEnter={() => setIsMarqueeHovered(true)}
-            onMouseLeave={() => setIsMarqueeHovered(false)}
+          <div
+            className="marquee"
+            ref={clientsMarqueeRef}
+            onMouseEnter={() => setIsClientsMarqueeHovered(true)}
+            onMouseLeave={() => setIsClientsMarqueeHovered(false)}
           >
-            <div className="marquee-content" style={{ animationPlayState: isMarqueeHovered ? 'paused' : 'running' }}>
-              {galleryImages.map((src, i) => (
-                <img key={i} src={src} alt={`Gallery ${i + 1}`} onClick={() => openLightbox(i)} style={{ cursor: 'pointer' }} />
+            <div className="marquee-content clients-marquee-content" style={{ animationPlayState: isClientsMarqueeHovered ? 'paused' : 'running' }}>
+              {clients.map((name, i) => (
+                <div key={i} className="client-badge">{name}</div>
               ))}
-              {galleryImages.map((src, i) => (
-                <img key={`dup-${i}`} src={src} alt="" aria-hidden="true" onClick={() => openLightbox(i)} style={{ cursor: 'pointer' }} />
+              {clients.map((name, i) => (
+                <div key={`dup-${i}`} className="client-badge" aria-hidden="true">{name}</div>
               ))}
             </div>
+          </div>
+          <button className="marquee-nav marquee-nav-right" onClick={scrollClientsMarqueeRight} aria-label="Scroll right">
+            ›
+          </button>
         </div>
-        <button className="marquee-nav marquee-nav-right" onClick={scrollMarqueeRight} aria-label="Scroll right">
-          ›
-        </button>
-      </div>
       </section>
 
       {/* Pricing Section */}
