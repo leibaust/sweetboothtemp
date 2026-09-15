@@ -4,8 +4,8 @@ import ContactForm from './components/ContactForm'
 
 const CURATED_GALLERY = [
   { crop: 'images/gallery-crop-01.png', full: 'images/16.jpg', tag: 'No. 01', label: 'Weddings' },
-  { crop: 'images/gallery-crop-02.png', full: 'images/06.jpg', tag: 'No. 02', label: 'Receptions' },
-  { crop: 'images/gallery-crop-03.jpg', full: 'images/12.jpg', tag: 'No. 03', label: 'Corporate' },
+  { crop: 'images/gallery-crop-02.png', full: 'images/06.jpg', tag: 'No. 02', label: 'Corporate' },
+  { crop: 'images/gallery-crop-03.jpg', full: 'images/12.jpg', tag: 'No. 03', label: 'Receptions' },
   { crop: 'images/gallery-crop-04.jpg', full: 'images/26.jpg', tag: 'No. 04', label: 'Birthdays' },
 ];
 
