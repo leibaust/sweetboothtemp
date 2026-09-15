@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import ContactForm from './components/ContactForm'
 
@@ -20,6 +20,8 @@ function App() {
   const [printLightbox, setPrintLightbox] = useState<string | null>(null);
   const [moreSamplesOpen, setMoreSamplesOpen] = useState(false);
   const [openAddons, setOpenAddons] = useState<{ base: boolean; sweet: boolean }>({ base: false, sweet: false });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,11 +37,23 @@ function App() {
       if (e.key === 'Escape') {
         setPrintLightbox(null);
         setMoreSamplesOpen(false);
+        setMobileMenuOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [mobileMenuOpen]);
 
   const scrollToContact = (pkg = '') => {
     if (pkg) setSelectedPackage(pkg);
@@ -59,11 +73,19 @@ function App() {
     <>
       {/* Header */}
       <header className="header">
-        <nav className="nav">
-          <ul className="nav-links">
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToContact(); }}>Contact</a></li>
+        <nav className="nav" ref={navRef}>
+          <button
+            className={`nav-hamburger ${mobileMenuOpen ? 'is-open' : ''}`}
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            <span></span><span></span><span></span>
+          </button>
+          <ul className={`nav-links ${mobileMenuOpen ? 'is-open' : ''}`}>
+            <li><a href="#gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</a></li>
+            <li><a href="#pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</a></li>
+            <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToContact(); setMobileMenuOpen(false); }}>Contact</a></li>
           </ul>
           <img src="/logo.svg" alt="Sweetbooth" className="logo" onClick={scrollToTop} />
           <button className="nav-book-btn" onClick={() => scrollToContact()}>Book Now</button>
@@ -75,7 +97,7 @@ function App() {
         <div className="hero-content">
           <p className="eyebrow hero-eyebrow">Vancouver, BC · Est. 2023</p>
           <h1 className="hero-title">A photo experience<br />that <span className="script">takes the cake.</span></h1>
-          <p className="hero-subtitle">Elevate your Greater Vancouver event with SweetBooth's open-air photo booth rental experiences.</p>
+          <p className="hero-subtitle">Elevate your Greater Vancouver event with SweetBooth's iconic & timeless photo experiences.</p>
           <button className="hero-btn" onClick={() => scrollToContact()}>Book My SweetBooth</button>
         </div>
         <div className="hero-image">
@@ -101,7 +123,7 @@ function App() {
               <p className="eyebrow">From the booth</p>
               <h2 className="section-title">Our <em>Samples</em></h2>
             </div>
-            <p className="section-note">A contact sheet, not a scrapbook — real strips from real Vancouver weddings and parties.</p>
+            <p className="section-note">Real photos from real Metro-Vancouver weddings and parties.</p>
           </div>
           <div className="gallery-strip">
             {CURATED_GALLERY.map((item) => (
@@ -166,6 +188,7 @@ function App() {
                   <ul className="pricing-list">
                     <li>$50 — Standard props</li>
                     <li>$50 — Per additional photo layout option</li>
+                    <li>$150 — Unlimited Photos</li>
                     <li>$75/hr — Idle time</li>
                   </ul>
                 </div>
@@ -178,6 +201,7 @@ function App() {
               <div className="pricing-card-header">
                 <h3 className="pricing-card-name">The Sweet Package</h3>
                 <div className="pricing-card-price">
+                  <span className="pricing-amount-was">$1,350</span>
                   <span className="pricing-amount">$1,000</span>
                 </div>
                 <span className="pricing-duration">4h open + up to 2h idle</span>

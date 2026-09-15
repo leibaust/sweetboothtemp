@@ -16,6 +16,15 @@ function ContactForm({ selectedPackage = '' }: { selectedPackage?: string }) {
     }
   }, [selectedPackage])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [statusModal, setStatusModal] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setStatusModal(null)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,14 +47,14 @@ function ContactForm({ selectedPackage = '' }: { selectedPackage?: string }) {
       })
 
       if (response.ok) {
-        alert('Thank you for your message! We\'ll get back to you soon.')
+        setStatusModal({ type: 'success', message: "Thank you for your message! We'll get back to you soon." })
         setFormData({ firstName: '', lastName: '', email: '', package: '', hearAboutUs: '', message: '' })
       } else {
         throw new Error('Failed to send message')
       }
     } catch (error) {
       console.error('Error sending message:', error)
-      alert('Sorry, there was an error sending your message. Please try again.')
+      setStatusModal({ type: 'error', message: 'Sorry, there was an error sending your message. Please try again.' })
     } finally {
       setIsSubmitting(false)
     }
@@ -154,6 +163,19 @@ function ContactForm({ selectedPackage = '' }: { selectedPackage?: string }) {
           <img src="images/contact-img.png" alt="SweetBooth event moment" />
         </div>
       </div>
+
+      {statusModal && (
+        <div className="status-modal" onClick={(e) => { if (e.target === e.currentTarget) setStatusModal(null); }}>
+          <div className={`status-modal-card ${statusModal.type === 'error' ? 'is-error' : ''}`}>
+            <p className="eyebrow">{statusModal.type === 'success' ? 'Booking request' : 'Something went wrong'}</p>
+            <h3 className="status-modal-title">
+              {statusModal.type === 'success' ? <>Message <em>sent!</em></> : <>Not quite <em>sent.</em></>}
+            </h3>
+            <p className="status-modal-message">{statusModal.message}</p>
+            <button className="status-modal-btn" onClick={() => setStatusModal(null)}>Got It</button>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

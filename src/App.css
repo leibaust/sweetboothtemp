@@ -177,6 +177,39 @@ body::after {
   align-items: center;
 }
 
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  justify-self: start;
+  background: none;
+  border: none;
+  padding: 6px;
+  margin-left: -6px;
+  cursor: pointer;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-main);
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+.nav-hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .logo {
   height: 38px;
   width: auto;
@@ -564,6 +597,76 @@ body::after {
   cursor: pointer;
 }
 
+/* Status modal (form submit confirmation, replaces the native alert()) */
+.status-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  background: rgba(18, 15, 10, .78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.status-modal-card {
+  background: var(--color-background);
+  border: 1px solid var(--color-main);
+  max-width: 420px;
+  width: 100%;
+  padding: 48px 40px 40px;
+  text-align: center;
+}
+
+.status-modal-title {
+  font-family: 'title', serif;
+  font-weight: 400;
+  font-size: 1.8rem;
+  color: var(--color-main);
+  margin: 14px 0 16px;
+}
+
+.status-modal-title em {
+  font-style: italic;
+  color: var(--color-secondary);
+}
+
+.status-modal-card.is-error .status-modal-title {
+  color: var(--color-ink);
+}
+
+.status-modal-card.is-error .status-modal-title em {
+  color: var(--color-ink-soft);
+}
+
+.status-modal-message {
+  font-family: 'body', serif;
+  font-style: italic;
+  color: var(--color-ink-soft);
+  font-size: .95rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.status-modal-btn {
+  background: var(--color-main);
+  color: var(--color-on-main);
+  border: 1px solid var(--color-main);
+  padding: 15px 36px;
+  font-size: .72rem;
+  font-weight: 400;
+  font-family: 'subtitle', sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+
+.status-modal-btn:hover {
+  background: var(--color-background);
+  color: var(--color-main);
+}
+
 /* Pricing Section */
 .pricing-grid {
   display: grid;
@@ -632,6 +735,20 @@ body::after {
 
 .pricing-card-featured .pricing-amount {
   color: var(--color-on-main);
+}
+
+.pricing-amount-was {
+  font-family: 'title', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-ink-soft);
+  text-decoration: line-through;
+  opacity: .6;
+  line-height: 1;
+}
+
+.pricing-card-featured .pricing-amount-was {
+  color: rgba(247, 235, 219, .65);
 }
 
 .pricing-duration {
@@ -1015,9 +1132,44 @@ body::after {
     padding: 0 1rem;
   }
 
+  .nav-hamburger {
+    display: flex;
+  }
+
   .nav-links {
-    gap: 0.5rem;
-    font-size: 0.7rem;
+    display: none;
+    position: absolute;
+    justify-self: stretch;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-main);
+    padding: 4px 1rem 16px;
+  }
+
+  .nav-links.is-open {
+    display: flex;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .nav-links li:last-child a {
+    border-bottom: none;
+  }
+
+  .nav-links a::after {
+    display: none;
   }
 
   .logo {
