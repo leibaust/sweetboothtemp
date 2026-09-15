@@ -60,75 +60,99 @@ function ContactForm({ selectedPackage = '' }: { selectedPackage?: string }) {
 
   return (
     <section className="contact" id="contact">
-      <div className="contact-container">
-        <h2 className="section-title">Get the scoop.</h2>
-        <p className="contact-subtitle">Get started on booking your SweetBooth by sending us some details about your event. We’ll let you know if we’re available and also send you some pricing details.</p>
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              required
-            />
+      <div className="contact-row">
+        <form className="contact-form-col" onSubmit={handleSubmit}>
+          <p className="eyebrow">Start your booking</p>
+          <h2 className="section-title contact-heading">Let's <em>Celebrate</em></h2>
+          <p className="section-note contact-note" style={{ maxWidth: 'none' }}>Tell us the basics — we'll follow up within a day with availability and next steps.</p>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="cf-firstName">First Name</label>
+              <input
+                id="cf-firstName"
+                type="text"
+                name="firstName"
+                placeholder="Jane"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="cf-lastName">Last Name</label>
+              <input
+                id="cf-lastName"
+                type="text"
+                name="lastName"
+                placeholder="Doe"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
+
           <div className="form-group">
+            <label htmlFor="cf-email">Email</label>
             <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <input
+              id="cf-email"
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="jane@email.com"
               value={formData.email}
               onChange={handleInputChange}
               required
             />
           </div>
+
           <div className="form-group">
+            <label htmlFor="cf-package">Which package would you like to book?</label>
             <select
+              id="cf-package"
               name="package"
               value={formData.package}
               onChange={(e) => setFormData({ ...formData, package: e.target.value })}
               className="form-select"
             >
-              <option value="" disabled>Which Package Would You Like To Book?</option>
+              <option value="" disabled>Select a package</option>
               <option value="base">Base Package</option>
               <option value="sweet">Sweet Package</option>
               <option value="unsure">Not Sure Yet</option>
             </select>
           </div>
+
           <div className="form-group">
+            <label htmlFor="cf-hearAboutUs">How did you hear about us?</label>
             <input
+              id="cf-hearAboutUs"
               type="text"
               name="hearAboutUs"
-              placeholder="How did you hear about us?"
+              placeholder="Instagram, referral, Google..."
               value={formData.hearAboutUs}
               onChange={handleInputChange}
             />
           </div>
+
           <div className="form-group">
+            <label htmlFor="cf-message">Tell us about your event</label>
             <textarea
+              id="cf-message"
               name="message"
-              placeholder="Tell us about your event or request. Some details that would be helpful are date, time, type of event, and location"
-              rows={6}
+              placeholder="Date, time, type of event, and location..."
               value={formData.message}
               onChange={handleInputChange}
             ></textarea>
           </div>
+
           <button type="submit" className="submit-btn" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {isSubmitting ? 'Sending...' : 'Send Inquiry'}
           </button>
         </form>
+
+        <div className="contact-photo">
+          <img src="images/contact-img.png" alt="SweetBooth event moment" />
+        </div>
       </div>
     </section>
   )

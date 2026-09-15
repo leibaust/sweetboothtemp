@@ -1,50 +1,25 @@
-import { useState, useEffect, useRef, type CSSProperties } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import ContactForm from './components/ContactForm'
 
-type PolaroidStyle = CSSProperties & { '--rot'?: string };
-
-const SCATTER_POSITIONS: { top: string; left: string; rot: number }[] = [
-  { top: '2%',  left: '0%',  rot: -7 },
-  { top: '6%',  left: '15%', rot: 5 },
-  { top: '0%',  left: '30%', rot: -4 },
-  { top: '7%',  left: '45%', rot: 8 },
-  { top: '3%',  left: '60%', rot: -6 },
-  { top: '5%',  left: '74%', rot: 4 },
-  { top: '50%', left: '6%',  rot: 6 },
-  { top: '46%', left: '21%', rot: -5 },
-  { top: '55%', left: '36%', rot: 8 },
-  { top: '48%', left: '51%', rot: -7 },
-  { top: '58%', left: '64%', rot: 5 },
-  { top: '51%', left: '72%', rot: -4 },
+const CURATED_GALLERY = [
+  { crop: 'images/gallery-crop-01.png', full: 'images/16.jpg', tag: 'No. 01', label: 'Weddings' },
+  { crop: 'images/gallery-crop-02.png', full: 'images/06.jpg', tag: 'No. 02', label: 'Receptions' },
+  { crop: 'images/gallery-crop-03.jpg', full: 'images/12.jpg', tag: 'No. 03', label: 'Corporate' },
+  { crop: 'images/gallery-crop-04.jpg', full: 'images/26.jpg', tag: 'No. 04', label: 'Birthdays' },
 ];
+
+const FEATURED_NUMBERS = new Set(['16', '06', '12', '26']);
+const MORE_SAMPLES = Array.from({ length: 29 }, (_, i) => String(i + 1).padStart(2, '0'))
+  .filter((n) => !FEATURED_NUMBERS.has(n))
+  .map((n) => `images/${n}.jpg`);
 
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isClientsMarqueeHovered, setIsClientsMarqueeHovered] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState('');
-  const clientsMarqueeRef = useRef<HTMLDivElement>(null);
-
-  const galleryImages = Array.from({ length: 29 }, (_, i) => `images/${String(i + 1).padStart(2, '0')}.jpg`);
-
-  const CURATED_COUNT = Math.min(12, galleryImages.length);
-  const curatedIndices = Array.from({ length: CURATED_COUNT }, (_, i) =>
-    Math.round((i * (galleryImages.length - 1)) / (CURATED_COUNT - 1))
-  );
-
-  const clients = [
-    'Air Canada',
-    'Demonware',
-    'Stikeman Elliott LLP',
-    'Opert',
-    'Providence Health Care',
-    'Ratanak International',
-    '8 West Clinic',
-    'Orijin Yoga',
-    "St. Paul's Hospital",
-  ];
+  const [printLightbox, setPrintLightbox] = useState<string | null>(null);
+  const [moreSamplesOpen, setMoreSamplesOpen] = useState(false);
+  const [openAddons, setOpenAddons] = useState<{ base: boolean; sweet: boolean }>({ base: false, sweet: false });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,37 +32,14 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (lightboxImage) {
-        if (e.key === 'ArrowLeft') {
-          showPreviousImage();
-        } else if (e.key === 'ArrowRight') {
-          showNextImage();
-        } else if (e.key === 'Escape') {
-          setLightboxImage(null);
-        }
+      if (e.key === 'Escape') {
+        setPrintLightbox(null);
+        setMoreSamplesOpen(false);
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxImage, currentImageIndex]);
-
-  const openLightbox = (index: number) => {
-    setCurrentImageIndex(index);
-    setLightboxImage(galleryImages[index]);
-  };
-
-  const showPreviousImage = () => {
-    const newIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-    setCurrentImageIndex(newIndex);
-    setLightboxImage(galleryImages[newIndex]);
-  };
-
-  const showNextImage = () => {
-    const newIndex = (currentImageIndex + 1) % galleryImages.length;
-    setCurrentImageIndex(newIndex);
-    setLightboxImage(galleryImages[newIndex]);
-  };
+  }, []);
 
   const scrollToContact = (pkg = '') => {
     if (pkg) setSelectedPackage(pkg);
@@ -99,16 +51,8 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollClientsMarqueeLeft = () => {
-    if (clientsMarqueeRef.current) {
-      clientsMarqueeRef.current.scrollBy({ left: -400, behavior: 'smooth' });
-    }
-  };
-
-  const scrollClientsMarqueeRight = () => {
-    if (clientsMarqueeRef.current) {
-      clientsMarqueeRef.current.scrollBy({ left: 400, behavior: 'smooth' });
-    }
+  const toggleAddon = (key: 'base' | 'sweet') => {
+    setOpenAddons((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
@@ -121,7 +65,7 @@ function App() {
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToContact(); }}>Contact</a></li>
           </ul>
-          <img src="/logo.svg" alt="Sweetbooth" className="logo" onClick={scrollToTop} style={{ cursor: 'pointer' }} />
+          <img src="/logo.svg" alt="Sweetbooth" className="logo" onClick={scrollToTop} />
           <button className="nav-book-btn" onClick={() => scrollToContact()}>Book Now</button>
         </nav>
       </header>
@@ -129,135 +73,147 @@ function App() {
       {/* Hero Section */}
       <section className="hero" id="home">
         <div className="hero-content">
-          <h1 className="hero-title">A photo experience that takes the cake.</h1>
-          <p className="hero-subtitle">Elevate your Greater Vancouver event with SweetBooth’s open-air photo booth rental experiences.</p>
-          <button className="hero-btn" onClick={() => scrollToContact()}>BOOK MY SWEETBOOTH</button>
+          <p className="eyebrow hero-eyebrow">Vancouver, BC · Est. 2023</p>
+          <h1 className="hero-title">A photo experience<br />that <span className="script">takes the cake.</span></h1>
+          <p className="hero-subtitle">Elevate your Greater Vancouver event with SweetBooth's open-air photo booth rental experiences.</p>
+          <button className="hero-btn" onClick={() => scrollToContact()}>Book My SweetBooth</button>
         </div>
         <div className="hero-image">
-          <img src="images/booth.jpg" alt="Sweet treats" />
-        </div>
-      </section>
-
-      {/* Scattered Sample Gallery */}
-      <section className="gallery" id="gallery">
-        <h2 className="section-title">Our Samples</h2>
-        <div className="gallery-scatter-wrap">
-          <div className="gallery-scatter">
-            {curatedIndices.map((imgIndex, presetIndex) => {
-              const pos = SCATTER_POSITIONS[presetIndex];
-              const style: PolaroidStyle = { top: pos.top, left: pos.left, '--rot': `${pos.rot}deg` };
-              return (
-                <div key={imgIndex} className="gallery-polaroid" style={style} onClick={() => openLightbox(imgIndex)}>
-                  <img src={galleryImages[imgIndex]} alt={`Gallery ${imgIndex + 1}`} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Clients Marquee */}
-      <section className="clients" id="clients">
-        <h2 className="section-title">Our Satisfied Clients</h2>
-        <div className="marquee-container">
-          <button className="marquee-nav marquee-nav-left" onClick={scrollClientsMarqueeLeft} aria-label="Scroll left">
-            ‹
-          </button>
-          <div
-            className="marquee"
-            ref={clientsMarqueeRef}
-            onMouseEnter={() => setIsClientsMarqueeHovered(true)}
-            onMouseLeave={() => setIsClientsMarqueeHovered(false)}
-          >
-            <div className="marquee-content clients-marquee-content" style={{ animationPlayState: isClientsMarqueeHovered ? 'paused' : 'running' }}>
-              {clients.map((name, i) => (
-                <div key={i} className="client-badge">{name}</div>
-              ))}
-              {clients.map((name, i) => (
-                <div key={`dup-${i}`} className="client-badge" aria-hidden="true">{name}</div>
-              ))}
+          <div className="hero-frame">
+            <span className="frame-tick tl"></span><span className="frame-tick tr"></span>
+            <span className="frame-tick bl"></span><span className="frame-tick br"></span>
+            <img src="images/booth.jpg" alt="SweetBooth open-air booth" />
+            <div className="hero-frame-cap">
+              <span className="frame-tag">SweetBooth · No. 01</span>
+              <span className="frame-tag">Vintage Oak</span>
             </div>
           </div>
-          <button className="marquee-nav marquee-nav-right" onClick={scrollClientsMarqueeRight} aria-label="Scroll right">
-            ›
-          </button>
+        </div>
+      </section>
+
+      <div className="section-inner"><div className="rule-double"></div></div>
+
+      {/* Gallery */}
+      <section className="section-shell" id="gallery">
+        <div className="section-inner">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">From the booth</p>
+              <h2 className="section-title">Our <em>Samples</em></h2>
+            </div>
+            <p className="section-note">A contact sheet, not a scrapbook — real strips from real Vancouver weddings and parties.</p>
+          </div>
+          <div className="gallery-strip">
+            {CURATED_GALLERY.map((item) => (
+              <div className="gallery-frame" key={item.tag} onClick={() => setPrintLightbox(item.full)}>
+                <div className="gallery-frame-img"><img src={item.crop} alt={`Gallery sample — ${item.label}`} /></div>
+                <div className="gallery-frame-foot">
+                  <span className="frame-tag">{item.tag}</span>
+                  <span className="frame-tag">{item.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="more-toggle-wrap">
+            <button className="more-toggle" onClick={() => setMoreSamplesOpen(true)}>
+              <span className="plus">+</span> More Samples
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="pricing" id="pricing">
-        <h2 className="section-title">Our Packages</h2>
-        <p className="pricing-subtitle">Everything you need to make your event unforgettable.</p>
-        <div className="pricing-cards">
-
-          {/* Base Rate */}
-          <div className="pricing-card">
-            <div className="pricing-card-header">
-              <h3 className="pricing-card-name">Base Rate</h3>
-              <div className="pricing-card-price">
-                <span className="pricing-amount">$500</span>
-                <span className="pricing-duration">2 hours</span>
-              </div>
-              <p className="pricing-card-note">+$250 per add'l hour</p>
+      <section className="section-shell" id="pricing">
+        <div className="section-inner">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Boutique packages</p>
+              <h2 className="section-title">Our <em>Packages</em></h2>
             </div>
-            <div className="pricing-card-body">
-              <p className="pricing-section-label">Includes</p>
-              <ul className="pricing-list">
-                <li>Unlimited photo sessions, 1 printout (4×6") per session</li>
-                <li>Online album</li>
-                <li>Choice of 1 photo layout</li>
-                <li>Custom text</li>
-                <li>Standard white backdrop</li>
-                <li>Classy minimal look (no props)</li>
-                <li>Choice of full colour or black &amp; white photos</li>
-                <li>Professional attendee + setup &amp; takedown</li>
-              </ul>
-              <p className="pricing-section-label">Add-ons</p>
-              <ul className="pricing-addons">
-                <li><span className="addon-price">+$50</span> Standard props</li>
-                <li><span className="addon-price">+$50</span> Per additional photo layout option</li>
-                <li><span className="addon-price">+$75/hr</span> Idle time</li>
-              </ul>
-            </div>
-            <button className="pricing-btn" onClick={() => scrollToContact('base')}>Book This Package</button>
+            <p className="section-note">Minimum 2-hour booking. Everything you need to make your event unforgettable.</p>
           </div>
 
-          {/* Sweet Package */}
-          <div className="pricing-card pricing-card-featured">
-            <div className="pricing-card-badge">Most Popular</div>
-            <div className="pricing-card-header">
-              <h3 className="pricing-card-name">The Sweet Package</h3>
-              <div className="pricing-card-price">
-                <span className="pricing-amount">$1,000</span>
+          <div className="pricing-grid">
+
+            {/* Base Rate */}
+            <div className="pricing-card">
+              <div className="pricing-card-header">
+                <h3 className="pricing-card-name">Base Rate</h3>
+                <div className="pricing-card-price">
+                  <span className="pricing-amount">$500</span>
+                </div>
+                <span className="pricing-duration">2 Hours · +$250 per add'l hour</span>
+              </div>
+              <div className="pricing-rule"></div>
+              <div className="pricing-card-body">
+                <ul className="pricing-list">
+                  <li>Unlimited photo sessions, 1 printout (4×6") per session</li>
+                  <li>Online album</li>
+                  <li>Choice of 1 photo layout</li>
+                  <li>Custom text</li>
+                  <li>Standard white backdrop</li>
+                  <li>Classy minimal look (no props)</li>
+                  <li>Choice of full colour or black &amp; white photos</li>
+                  <li>Professional attendee + setup &amp; takedown</li>
+                </ul>
+              </div>
+              <button className="pricing-btn" onClick={() => scrollToContact('base')}>Book This Package</button>
+              <button className="addon-toggle" onClick={() => toggleAddon('base')}>
+                <span className={`plus ${openAddons.base ? 'open' : ''}`}>+</span> Add Ons
+              </button>
+              <div className="addon-drawer" style={{ maxHeight: openAddons.base ? '260px' : '0px' }}>
+                <div className="addon-drawer-inner">
+                  <ul className="pricing-list">
+                    <li>$50 — Standard props</li>
+                    <li>$50 — Per additional photo layout option</li>
+                    <li>$75/hr — Idle time</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Sweet Package */}
+            <div className="pricing-card pricing-card-featured">
+              <div className="pricing-card-badge">Most Popular</div>
+              <div className="pricing-card-header">
+                <h3 className="pricing-card-name">The Sweet Package</h3>
+                <div className="pricing-card-price">
+                  <span className="pricing-amount">$1,000</span>
+                </div>
                 <span className="pricing-duration">4h open + up to 2h idle</span>
               </div>
-              <p className="pricing-card-note">2 hours idle time included complimentary</p>
+              <div className="pricing-rule"></div>
+              <div className="pricing-card-body">
+                <ul className="pricing-list">
+                  <li>Full event coverage (up to 4 hours open)</li>
+                  <li>Unlimited photo sessions, unlimited prints per session</li>
+                  <li>Option for complimentary additional photo layout</li>
+                  <li>Online album</li>
+                  <li>Custom text</li>
+                  <li>Standard white backdrop</li>
+                  <li>Classy minimal look (no props)</li>
+                  <li>Choice of full colour or black &amp; white photos</li>
+                  <li>Professional attendees + setup &amp; takedown</li>
+                </ul>
+              </div>
+              <button className="pricing-btn" onClick={() => scrollToContact('sweet')}>Book This Package</button>
+              <button className="addon-toggle" onClick={() => toggleAddon('sweet')}>
+                <span className={`plus ${openAddons.sweet ? 'open' : ''}`}>+</span> Add Ons
+              </button>
+              <div className="addon-drawer" style={{ maxHeight: openAddons.sweet ? '260px' : '0px' }}>
+                <div className="addon-drawer-inner">
+                  <ul className="pricing-list">
+                    <li>$50 — Standard props</li>
+                    <li>$50 — Per additional photo layout option</li>
+                    <li>$250/hr — Per additional hour open</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div className="pricing-card-body">
-              <p className="pricing-section-label">Includes</p>
-              <ul className="pricing-list">
-                <li>Full event coverage (up to 4 hours open)</li>
-                <li>Unlimited photo sessions, unlimited prints per session</li>
-                <li>Option for complimentary additional photo layout</li>
-                <li>Online album</li>
-                <li>Custom text</li>
-                <li>Standard white backdrop</li>
-                <li>Classy minimal look (no props)</li>
-                <li>Choice of full colour or black &amp; white photos</li>
-                <li>Professional attendees + setup &amp; takedown</li>
-              </ul>
-              <p className="pricing-section-label">Add-ons</p>
-              <ul className="pricing-addons">
-                <li><span className="addon-price">+$50</span> Standard props</li>
-                <li><span className="addon-price">+$50</span> Per additional photo layout option</li>
-                <li><span className="addon-price">+$250/hr</span> Per additional hour open</li>
-              </ul>
-            </div>
-            <button className="pricing-btn pricing-btn-featured" onClick={() => scrollToContact('sweet')}>Book This Package</button>
-          </div>
 
+          </div>
+          <p className="pricing-footnote">Minimum 2-hour booking. 10'×10'×10' space with available outlet required. Access to location 30 mins before &amp; after booking time for setup/takedown.</p>
         </div>
-        <p className="pricing-footnote">Minimum 2-hour booking. 10'×10'×10' space with available outlet required. Access to location 30 mins before &amp; after booking time for setup/takedown.</p>
       </section>
 
       {/* Contact Form */}
@@ -265,7 +221,10 @@ function App() {
 
       {/* Footer */}
       <footer className="footer">
-        <p>&copy; 2026 Sweetbooth. All rights reserved.</p>
+        <img className="footer-logo" src="/logo.svg" alt="Sweetbooth" />
+        <p className="footer-tag">You dessert the best!</p>
+        <div className="rule-double footer-rule"></div>
+        <p className="footer-fine">Vancouver, BC · Est. 2023</p>
       </footer>
 
       {/* Back to Top Button */}
@@ -275,15 +234,31 @@ function App() {
         </button>
       )}
 
-      {/* Lightbox Modal */}
-      {lightboxImage && (
-        <div className="lightbox" onClick={() => setLightboxImage(null)}>
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img src={lightboxImage} alt="Enlarged view" />
-            <button className="lightbox-close" onClick={() => setLightboxImage(null)}>×</button>
-            <button className="lightbox-prev" onClick={showPreviousImage} aria-label="Previous image">‹</button>
-            <button className="lightbox-next" onClick={showNextImage} aria-label="Next image">›</button>
+      {/* More Samples Modal */}
+      {moreSamplesOpen && (
+        <div className="more-modal" onClick={(e) => { if (e.target === e.currentTarget) setMoreSamplesOpen(false); }}>
+          <div className="more-modal-inner">
+            <div className="more-modal-head">
+              <p className="more-modal-title">More from the booth</p>
+              <button className="more-modal-close" onClick={() => setMoreSamplesOpen(false)} aria-label="Close">&times;</button>
+            </div>
+            <div className="more-grid">
+              {MORE_SAMPLES.map((src) => (
+                <img key={src} src={src} alt="SweetBooth sample photo" onClick={() => setPrintLightbox(src)} />
+              ))}
+            </div>
           </div>
+        </div>
+      )}
+
+      {/* Print Lightbox */}
+      {printLightbox && (
+        <div className="print-lightbox" onClick={(e) => { if (e.target === e.currentTarget) setPrintLightbox(null); }}>
+          <div className="print-lightbox-inner">
+            <img src={printLightbox} alt="Full photobooth print" />
+            <p className="print-lightbox-cap">The original print — straight off the booth</p>
+          </div>
+          <button className="print-lightbox-close" onClick={() => setPrintLightbox(null)} aria-label="Close">&times;</button>
         </div>
       )}
     </>
