@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# SweetBooth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing site for SweetBooth — a vintage-inspired open-air photobooth rental company based in Vancouver, BC. Built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Brand
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The visual design follows `SweetBooth_BrandStyleGuide_2025.pdf`: flat color blocking, hairline rule dividers, and a "contact sheet" / film-print motif in place of gradients and drop shadows. See [`BRAND_REFRESH.md`](./BRAND_REFRESH.md) for the full brief on how the site was brought in line with the guide — what it looked like before, what the guide actually specifies, and what changed.
 
-## React Compiler
+**Palette:** Sweet Cream `#F7EBDB` · Velvet Mint `#176246` · Parlour Pistachio `#6A927C` · Cotton Candy Blush `#FCDFD6`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Type:** Perfectly Nineties (headlines), Great Vibes (script accents), Delio (labels/buttons), Lora (body) — all loaded from `public/fonts/`.
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Other scripts:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # type-check and build for production (outputs to dist/)
+npm run preview  # preview the production build locally
+npm run lint     # run ESLint
 ```
+
+## Project structure
+
+```
+src/
+  App.tsx                        # page layout: header, hero, gallery, pricing, contact, footer
+  App.css                        # all site styling — brand tokens, layout, components
+  components/
+    ContactForm.tsx              # booking inquiry form (active — submits via Formspree)
+    ContactFormFormspree.tsx     # alternate Formspree implementation, not currently used
+public/
+  images/                        # gallery photos, hero/contact photography, cropped assets
+  fonts/                         # brand font files (Delio, Great Vibes, Perfectly Nineties, Lora)
+  logo.svg
+```
+
+## Contact form
+
+The booking form in `ContactForm.tsx` submits to Formspree. See [`EMAIL_SETUP.md`](./EMAIL_SETUP.md) if you need to reconfigure where submissions go or switch providers. If you deploy this to a new domain, confirm that domain is allowed in the Formspree dashboard.
+
+## Deployment
+
+`npm run build` produces a static `dist/` folder that can be served from any static host (Vercel, Netlify, S3, etc.) — nothing in this project requires a backend.
