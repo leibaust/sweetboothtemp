@@ -1,87 +1,117 @@
 /* Reset and base styles */
+
+/* Every face below loads a WOFF2 first (a fraction of the raw TTF's size,
+   and the only version most browsers will ever fetch) with the original
+   TTF as a fallback for the rare browser that can't use WOFF2. font-display:
+   swap shows body-font text immediately instead of hiding it while these
+   load, which is what actually caused the site to render blank at first. */
+
 @font-face {
   font-family: 'subtitle';
   src: url('/fonts/Delio/Delio-Regular.woff2') format('woff2'),
        url('/fonts/Delio/Delio-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'accent';
-  src: url('/fonts/GreatVibes/GreatVibes-Regular.ttf') format('truetype');
+  src: url('/fonts/GreatVibes/GreatVibes-Regular.woff2') format('woff2'),
+       url('/fonts/GreatVibes/GreatVibes-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'title';
-  src: url('/fonts/PerfectlyNineties/TTF/PerfectlyNineties-Regular.ttf') format('truetype');
+  src: url('/fonts/PerfectlyNineties/WOFF2/PerfectlyNineties-Regular.woff2') format('woff2'),
+       url('/fonts/PerfectlyNineties/TTF/PerfectlyNineties-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'title';
-  src: url('/fonts/PerfectlyNineties/TTF/PerfectlyNineties-Italic.ttf') format('truetype');
+  src: url('/fonts/PerfectlyNineties/WOFF2/PerfectlyNineties-Italic.woff2') format('woff2'),
+       url('/fonts/PerfectlyNineties/TTF/PerfectlyNineties-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-Regular.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-Regular.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-Medium.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-Medium.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-SemiBold.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-Bold.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-Bold.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-Italic.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-Italic.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-MediumItalic.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-MediumItalic.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-SemiBoldItalic.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-SemiBoldItalic.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-SemiBoldItalic.ttf') format('truetype');
   font-weight: 600;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'body';
-  src: url('/fonts/Lora/static/Lora-BoldItalic.ttf') format('truetype');
+  src: url('/fonts/Lora/static/woff2/Lora-BoldItalic.woff2') format('woff2'),
+       url('/fonts/Lora/static/Lora-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
 }
 
 :root {

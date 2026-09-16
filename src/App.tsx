@@ -3,8 +3,8 @@ import './App.css'
 import ContactForm from './components/ContactForm'
 
 const CURATED_GALLERY = [
-  { crop: 'images/gallery-crop-01.png', full: 'images/16.jpg', tag: 'No. 01', label: 'Weddings' },
-  { crop: 'images/gallery-crop-02.png', full: 'images/06.jpg', tag: 'No. 02', label: 'Corporate' },
+  { crop: 'images/gallery-crop-01.jpg', full: 'images/16.jpg', tag: 'No. 01', label: 'Weddings' },
+  { crop: 'images/gallery-crop-02.jpg', full: 'images/06.jpg', tag: 'No. 02', label: 'Corporate' },
   { crop: 'images/gallery-crop-03.jpg', full: 'images/12.jpg', tag: 'No. 03', label: 'Receptions' },
   { crop: 'images/gallery-crop-04.jpg', full: 'images/26.jpg', tag: 'No. 04', label: 'Birthdays' },
 ];
@@ -104,7 +104,7 @@ function App() {
           <div className="hero-frame">
             <span className="frame-tick tl"></span><span className="frame-tick tr"></span>
             <span className="frame-tick bl"></span><span className="frame-tick br"></span>
-            <img src="images/booth.jpg" alt="SweetBooth open-air booth" />
+            <img src="images/booth.jpg" alt="SweetBooth open-air booth" fetchPriority="high" />
             <div className="hero-frame-cap">
               <span className="frame-tag">SweetBooth · No. 01</span>
               <span className="frame-tag">Vintage Oak</span>
@@ -128,7 +128,7 @@ function App() {
           <div className="gallery-strip">
             {CURATED_GALLERY.map((item) => (
               <div className="gallery-frame" key={item.tag} onClick={() => setPrintLightbox(item.full)}>
-                <div className="gallery-frame-img"><img src={item.crop} alt={`Gallery sample — ${item.label}`} /></div>
+                <div className="gallery-frame-img"><img src={item.crop} alt={`Gallery sample — ${item.label}`} loading="lazy" /></div>
                 <div className="gallery-frame-foot">
                   <span className="frame-tag">{item.tag}</span>
                   <span className="frame-tag">{item.label}</span>
@@ -268,7 +268,7 @@ function App() {
             </div>
             <div className="more-grid">
               {MORE_SAMPLES.map((src) => (
-                <img key={src} src={src} alt="SweetBooth sample photo" onClick={() => setPrintLightbox(src)} />
+                <img key={src} src={src} alt="SweetBooth sample photo" loading="lazy" onClick={() => setPrintLightbox(src)} />
               ))}
             </div>
           </div>

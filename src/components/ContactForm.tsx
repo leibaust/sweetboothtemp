@@ -160,7 +160,7 @@ function ContactForm({ selectedPackage = '' }: { selectedPackage?: string }) {
         </form>
 
         <div className="contact-photo">
-          <img src="images/contact-img.png" alt="SweetBooth event moment" />
+          <img src="images/contact-img.jpg" alt="SweetBooth event moment" loading="lazy" />
         </div>
       </div>
 
